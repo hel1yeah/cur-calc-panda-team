@@ -2,12 +2,12 @@
   <div class="nav">
     <ul class="nav__list">
       <li class="nav__list--item">
-        <router-link class="nav__list--item-link" to=""
+        <router-link class="nav__list--item-link" :to="{ name: 'exchange' }"
           >Current exchange rates
         </router-link>
       </li>
       <li class="nav__list--item">
-        <router-link class="nav__list--item-link" to="">
+        <router-link class="nav__list--item-link" :to="{ name: 'calc' }">
           Calculator
         </router-link>
       </li>
