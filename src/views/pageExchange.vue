@@ -23,9 +23,25 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 export default {
   data() {
     return {};
+  },
+  methods: {
+    getExchangeRate() {
+      this.$store.dispatch('exchange/getExchangeRate');
+    },
+  },
+  computed: {
+    ...mapGetters(['getExchangeRateStore']),
+    ...mapState({
+      loading: (state) => state.exchange.loading,
+      error: (state) => state.exchange.error,
+    }),
+  },
+  mounted() {
+    this.getExchangeRate();
   },
 };
 </script>
