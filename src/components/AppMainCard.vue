@@ -1,5 +1,7 @@
 <template>
-  <div class="card"></div>
+  <div class="card">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
