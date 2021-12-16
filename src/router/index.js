@@ -4,7 +4,7 @@ import pageCalc from './../views/pageCalc.vue';
 
 const routes = [
   {
-    path: '/exchange',
+    path: '/',
     name: 'exchange',
     component: pageExchange,
   },
@@ -18,6 +18,8 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  linkActiveClass: 'active',
+  linkExactActiveClass: 'active',
 });
 
 export default router;

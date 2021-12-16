@@ -6,7 +6,18 @@ body {
   font-family: 'Roboto', sans-serif;
   color: var(--black-color);
   font-weight: 400;
+  font-size: 20px;
   background: linear-gradient(115.67deg, #edc1d3 7.14%, #91bdec 99.42%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 25px;
+  margin: 0;
 }
 
 a {
@@ -17,4 +28,8 @@ a {
   max-width: 1270px;
   margin: 0 auto;
   padding: 20px 30px;
+}
+
+.active {
+  color: var(--pink-color);
 }
