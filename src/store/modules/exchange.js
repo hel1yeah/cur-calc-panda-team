@@ -1,5 +1,5 @@
-import exchange from './../../axios/exchange';
-
+import { getListquotes, getExchange } from './../../axios/exchange';
+console.log(getExchange);
 export default {
   namespaced: true,
   state() {
@@ -30,13 +30,14 @@ export default {
     getExchangeRate({ commit }) {
       return new Promise(() => {
         commit('exchangeRateStart');
-        exchange
-          .getExchange()
+        getListquotes()
           .then((response) => {
+            console.log(response.data);
             commit('exchangeRateSuccess', response.data);
           })
-          .catch(() => {
-            commit('exchangeRateFailure');
+          .catch((err) => {
+            console.log(err);
+            commit('exchangeRateFailure', err);
           });
       });
     },

@@ -7,6 +7,9 @@ module.exports = {
       addStyleResource(config.module.rule('scss').oneOf(type))
     );
   },
+  devServer: {
+    proxy: 'http://localhost:8080',
+  },
 };
 
 function addStyleResource(rule) {

@@ -1,10 +1,11 @@
 import axios from './axios';
-let dateCurrencies = '15.12.2021';
+
+const getListquotes = () => {
+  return axios.request('listquotes');
+};
 
 const getExchange = () => {
-  return axios.get(dateCurrencies);
+  return axios.request('exchange');
 };
 
-export default {
-  getExchange,
-};
+export { getListquotes, getExchange };
