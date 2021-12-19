@@ -27,14 +27,19 @@ export default {
     },
   },
   actions: {
-    getExchangeRate({ commit }) {
+    getExchangeRate({ commit }, currency) {
       return new Promise(() => {
         commit('exchangeRateStart');
 
-        getExchange()
-          .then((response) => {
-            console.log(response);
-            commit('exchangeRateSuccess', response);
+        getExchange(currency)
+          .then(({ data }) => {
+            const newResults = Object.keys(data.results).map((item) => ({
+              name: item,
+              currency: data.results[item],
+            }));
+            console.log(newResults);
+
+            commit('exchangeRateSuccess', newResults);
           })
           .catch((err) => {
             commit('exchangeRateFailure', err);

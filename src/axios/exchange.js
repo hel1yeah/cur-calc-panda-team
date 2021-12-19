@@ -1,8 +1,7 @@
 import axios from './axios';
 
-const getExchange = () => {
-  console.log(process.env.YOUR_API_KEY);
-  return axios.get('/fetch-all');
+const getExchange = (currency) => {
+  return axios.get(`/fetch-all?from=${currency}`);
 };
 
 export { getExchange };
