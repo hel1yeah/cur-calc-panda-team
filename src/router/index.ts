@@ -1,8 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import pageExchange from './../views/pageExchange.vue';
 import pageCalc from './../views/pageCalc.vue';
+import { Component } from 'vue';
 
-const routes = [
+export interface IRoute {
+  path: string;
+  name: string;
+  component: Component;
+}
+
+const routes: IRoute[] = [
   {
     path: '/',
     name: 'exchange',
