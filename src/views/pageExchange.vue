@@ -18,7 +18,7 @@
             Країна <span>{{ mapCurrency[nameCurrency].country }}</span>
           </li>
           <li class="exchange__card--list-item">
-            Курс купівлі <span>{{ currency }}</span>
+            Курс <span>{{ currency }}</span>
           </li>
         </ul>
       </div>
@@ -678,13 +678,18 @@ export default {
   border-radius: 10px;
   margin: 40px 0 0;
   padding: 20px;
-  width: 340px;
+  width: 365px;
+  min-height: 300px;
   box-shadow: 0px 0px 10px var(--blue-clor);
+  min-height: 240px;
 }
 .exchange__card--title {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  & > span {
+    font-size: 18px;
+  }
 }
 .exchange__card--list {
   list-style-type: none;
@@ -694,6 +699,10 @@ export default {
 .exchange__card--list-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  padding: 5px 0;
+  & > span {
+    text-align: right;
+  }
 }
 </style>
