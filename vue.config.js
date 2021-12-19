@@ -1,11 +1,21 @@
 const path = require('path');
 
 module.exports = {
+  configureWebpack: () => {
+    if (process.env.NODE_ENV === 'production') {
+      // изменение конфигурации для production...
+    } else {
+      // изменения для разработки...
+    }
+  },
   chainWebpack: (config) => {
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
     types.forEach((type) =>
       addStyleResource(config.module.rule('scss').oneOf(type))
     );
+  },
+  devServer: {
+    proxy: 'http://localhost:8080',
   },
 };
 

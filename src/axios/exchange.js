@@ -1,10 +1,8 @@
 import axios from './axios';
-let dateCurrencies = '15.12.2021';
 
 const getExchange = () => {
-  return axios.get(dateCurrencies);
+  console.log(process.env.YOUR_API_KEY);
+  return axios.get('/fetch-all');
 };
 
-export default {
-  getExchange,
-};
+export { getExchange };

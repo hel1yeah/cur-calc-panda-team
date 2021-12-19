@@ -1,4 +1,4 @@
-import exchange from './../../axios/exchange';
+import { getExchange } from './../../axios/exchange';
 
 export default {
   namespaced: true,
@@ -30,13 +30,14 @@ export default {
     getExchangeRate({ commit }) {
       return new Promise(() => {
         commit('exchangeRateStart');
-        exchange
-          .getExchange()
+
+        getExchange()
           .then((response) => {
-            commit('exchangeRateSuccess', response.data);
+            console.log(response);
+            commit('exchangeRateSuccess', response);
           })
-          .catch(() => {
-            commit('exchangeRateFailure');
+          .catch((err) => {
+            commit('exchangeRateFailure', err);
           });
       });
     },
