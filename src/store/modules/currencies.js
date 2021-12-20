@@ -38,7 +38,6 @@ export default {
               countrie: item,
               currency: data.currencies[item],
             }));
-            console.log(newCurrencies);
             commit('getCurrencyListSuccess', newCurrencies);
           })
           .catch((err) => {

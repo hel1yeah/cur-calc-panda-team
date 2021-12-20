@@ -680,7 +680,12 @@ export default {
     this.getExchangeRate();
     this.getBaseCurrency();
   },
-  watch: {},
+  watch: {
+    baseCurrency(val) {
+      this.baseCurrency = val;
+      this.getExchangeRate();
+    },
+  },
 };
 </script>
 
