@@ -1,6 +1,20 @@
 <template>
   <div class="exchange">
-    <h1 class="exchange__title">Курс інозмених валют</h1>
+    <div class="exchange__header">
+      <h1 class="exchange__title">Курс інозмених валют</h1>
+      <label class="exchange__lable"> Базова валюта</label>
+      <select class="exchange__select" v-model="baseCurrency">
+        <option
+          class="exchange__option"
+          v-for="({ countrie, currency }, index) in currencyList"
+          :key="index"
+          :value="countrie"
+        >
+          {{ currency }} [ {{ countrie }} ]
+        </option>
+      </select>
+    </div>
+
     <div class="exchange__card--wrapper">
       <div
         class="exchange__card"
@@ -31,7 +45,7 @@ import { mapGetters, mapState } from 'vuex';
 export default {
   data() {
     return {
-      baseCurrency: 'USD',
+      baseCurrency: 'UAH',
       currency: '',
       mapCurrency: {
         AED: {
@@ -640,10 +654,17 @@ export default {
   methods: {
     getExchangeRate() {
       if (this.exchangeRate && this.exchangeRate.length > 0) return false;
-      this.$store.dispatch(
-        'exchange/getExchangeRate',
-        this.currency.length < 1 ? this.currency : this.baseCurrency
-      );
+      let currency =
+        this.currency.length > 1 ? this.currency : this.baseCurrency;
+      this.$store.dispatch('exchange/getExchangeRate', currency);
+    },
+    getBaseCurrency() {
+      if (this.currencyList && this.currencyList.length > 0) return false;
+      this.$store.dispatch('currencies/getBaseCurrency');
+    },
+    logItem(item) {
+      console.log(this.baseCurrency);
+      console.log(item);
     },
   },
   computed: {
@@ -652,13 +673,14 @@ export default {
       loading: (state) => state.exchange.loading,
       exchangeRate: (state) => state.exchange.exchangeRate,
       error: (state) => state.exchange.error,
+      currencyList: (state) => state.currencies.currencyList,
     }),
   },
   mounted() {
     this.getExchangeRate();
-    // console.log(Object.keys(this.mapCurrency).length);
-    // console.log(this.mapCurrency);
+    this.getBaseCurrency();
   },
+  watch: {},
 };
 </script>
 

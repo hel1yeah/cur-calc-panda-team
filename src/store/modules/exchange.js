@@ -30,15 +30,13 @@ export default {
     getExchangeRate({ commit }, currency) {
       return new Promise(() => {
         commit('exchangeRateStart');
-
         getExchange(currency)
           .then(({ data }) => {
             const newResults = Object.keys(data.results).map((item) => ({
               name: item,
               currency: data.results[item],
             }));
-            console.log(newResults);
-
+            // console.log(newResults);
             commit('exchangeRateSuccess', newResults);
           })
           .catch((err) => {
