@@ -2,20 +2,23 @@
   <div class="exchange">
     <div class="exchange__header">
       <h1 class="exchange__title">Курс інозмених валют</h1>
-      <label class="exchange__lable"> Базова валюта</label>
-      <select class="exchange__select" v-model="baseCurrency">
-        <option
-          class="exchange__option"
-          v-for="({ countrie, currency }, index) in currencyList"
-          :key="index"
-          :value="countrie"
-        >
-          {{ currency }} [ {{ countrie }} ]
-        </option>
-      </select>
+      <app-loader-line v-if="currencyLoading"></app-loader-line>
+      <template v-else>
+        <label class="exchange__lable"> Базова валюта</label>
+        <select class="exchange__select" v-model="baseCurrency">
+          <option
+            class="exchange__option"
+            v-for="({ countrie, currency }, index) in currencyList"
+            :key="index"
+            :value="countrie"
+          >
+            {{ currency }} [ {{ countrie }} ]
+          </option>
+        </select>
+      </template>
     </div>
-
-    <div class="exchange__card--wrapper">
+    <app-loader-circle v-if="loadingExchange"></app-loader-circle>
+    <div v-else class="exchange__card--wrapper">
       <div
         class="exchange__card"
         v-for="({ name: nameCurrency, currency }, index) in exchangeRate"
@@ -42,11 +45,15 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
+import AppLoaderCircle from './../components/AppLoaderCircle.vue';
+import AppLoaderLine from './../components/AppLoaderLine.vue';
 export default {
+  components: { AppLoaderLine, AppLoaderCircle },
   data() {
     return {
       baseCurrency: 'UAH',
       currency: '',
+      trigger: true,
       mapCurrency: {
         AED: {
           name: 'Дiрха́м',
@@ -653,10 +660,13 @@ export default {
   },
   methods: {
     getExchangeRate() {
-      if (this.exchangeRate && this.exchangeRate.length > 0) return false;
+      if (this.exchangeRate && this.exchangeRate.length > 0 && this.trigger)
+        return false;
       let currency =
         this.currency.length > 1 ? this.currency : this.baseCurrency;
-      this.$store.dispatch('exchange/getExchangeRate', currency);
+      this.$store.dispatch('exchange/getExchangeRate', currency).then(() => {
+        this.trigger = true;
+      });
     },
     getBaseCurrency() {
       if (this.currencyList && this.currencyList.length > 0) return false;
@@ -670,10 +680,11 @@ export default {
   computed: {
     ...mapGetters(['exchange/getExchangeRateStore']),
     ...mapState({
-      loading: (state) => state.exchange.loading,
+      loadingExchange: (state) => state.exchange.loading,
       exchangeRate: (state) => state.exchange.exchangeRate,
       error: (state) => state.exchange.error,
       currencyList: (state) => state.currencies.currencyList,
+      currencyLoading: (state) => state.currencies.loading,
     }),
   },
   mounted() {
@@ -682,6 +693,7 @@ export default {
   },
   watch: {
     baseCurrency(val) {
+      this.trigger = false;
       this.baseCurrency = val;
       this.getExchangeRate();
     },

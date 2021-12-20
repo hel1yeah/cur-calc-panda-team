@@ -1,13 +1,15 @@
 <template>
-  <div class="lds-roller">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+  <div class="lds-roller__wrapper">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -20,6 +22,11 @@ export default {
 </script>
 
 <style lang="scss">
+.lds-roller__wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .lds-roller {
   display: inline-block;
   position: relative;

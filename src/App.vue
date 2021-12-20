@@ -2,7 +2,9 @@
   <div class="container">
     <the-nav></the-nav>
 
-    <app-main-card> <router-view></router-view> </app-main-card>
+    <app-main-card>
+      <router-view></router-view>
+    </app-main-card>
   </div>
 </template>
 

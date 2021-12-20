@@ -18,5 +18,6 @@ export default {
   width: 100%;
   padding: 30px 25px;
   margin: 30px 0 0;
+  position: relative;
 }
 </style>
