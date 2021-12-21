@@ -5,8 +5,10 @@
       <app-loader-line v-if="currencyLoading"></app-loader-line>
       <template v-else>
         <label class="exchange__lable"> Базова валюта</label>
-        <select class="exchange__select" v-model="baseCurrency">
+        <select class="exchange__select" v-model="baseCurrencyApp">
+          <h1>{{ baseCurrencyApp }}</h1>
           <option
+            @click="test(currency)"
             class="exchange__option"
             v-for="({ countrie, currency }, index) in currencyList"
             :key="index"
@@ -44,15 +46,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+// mapGetters
+import { mapState } from 'vuex';
 import AppLoaderCircle from './../components/AppLoaderCircle.vue';
 import AppLoaderLine from './../components/AppLoaderLine.vue';
 export default {
   components: { AppLoaderLine, AppLoaderCircle },
   data() {
     return {
-      baseCurrency: 'UAH',
-      currency: '',
+      baseCurrencyApp: 'UAH',
       trigger: true,
       mapCurrency: {
         AED: {
@@ -662,41 +664,50 @@ export default {
     getExchangeRate() {
       if (this.exchangeRate && this.exchangeRate.length > 0 && this.trigger)
         return false;
-      let currency =
-        this.currency.length > 1 ? this.currency : this.baseCurrency;
-      this.$store.dispatch('exchange/getExchangeRate', currency).then(() => {
-        this.trigger = true;
-      });
+
+      this.$store
+        .dispatch('exchange/getExchangeRate', this.baseCurrencyStore)
+        .then(() => {
+          this.trigger = true;
+        });
+
+      this.$store.commit('currencies/setBaseCurrency', this.baseCurrencyApp);
     },
-    getBaseCurrency() {
+    getCurrencyList() {
       if (this.currencyList && this.currencyList.length > 0) return false;
-      this.$store.dispatch('currencies/getBaseCurrency');
+      this.$store.dispatch('currencies/getCurrencyList');
     },
-    logItem(item) {
-      console.log(this.baseCurrency);
-      console.log(item);
+    test(t) {
+      console.log(t);
     },
   },
   computed: {
-    ...mapGetters(['exchange/getExchangeRateStore']),
+    // ...mapGetters(['exchange/getExchangeRateStore']),
     ...mapState({
       loadingExchange: (state) => state.exchange.loading,
       exchangeRate: (state) => state.exchange.exchangeRate,
       error: (state) => state.exchange.error,
       currencyList: (state) => state.currencies.currencyList,
       currencyLoading: (state) => state.currencies.loading,
+      baseCurrencyStore: (state) => state.currencies.baseCurrency,
     }),
   },
   mounted() {
     this.getExchangeRate();
-    this.getBaseCurrency();
+    this.getCurrencyList();
   },
   watch: {
-    baseCurrency(val) {
+    baseCurrencyApp: function (val, oldVal) {
+      console.log('новое значение: %s, старое значение: %s', val, oldVal);
       this.trigger = false;
-      this.baseCurrency = val;
+      this.baseCurrencyApp = val;
       this.getExchangeRate();
     },
+    // baseCurrencyApp(val) {
+    //   this.trigger = false;
+    //   this.baseCurrency = val;
+    //   this.getExchangeRate();
+    // },
   },
 };
 </script>
@@ -705,6 +716,9 @@ export default {
 .exchange {
 }
 .exchange__title {
+}
+.exchange__select {
+  margin: 0 0 0 30px;
 }
 .exchange__card--wrapper {
   display: flex;

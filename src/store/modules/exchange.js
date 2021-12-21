@@ -46,8 +46,8 @@ export default {
     },
   },
   getters: {
-    getExchangeRateStore(store) {
-      store.exchangeRate;
-    },
+    // getExchangeRateStore(store) {
+    //   store.exchangeRate;
+    // },
   },
 };

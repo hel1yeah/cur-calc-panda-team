@@ -5,7 +5,7 @@ export default {
   state() {
     return {
       currencyList: null,
-      baseCurrency: null,
+      baseCurrency: 'UAH',
       error: null,
       loading: false,
     };
@@ -26,9 +26,12 @@ export default {
       state.error = payload;
       state.loading = false;
     },
+    setBaseCurrency(state, payload) {
+      state.baseCurrency = payload;
+    },
   },
   actions: {
-    getBaseCurrency({ commit }) {
+    getCurrencyList({ commit }) {
       return new Promise(() => {
         commit('getCurrencyListStart');
         getCurrency()

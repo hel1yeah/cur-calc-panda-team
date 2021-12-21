@@ -1,5 +1,6 @@
 <template>
-  <div><h1>calc</h1></div>
+  <h1>КОНВЕРТЕР ВАЛЮТ</h1>
+  <div class="calc"></div>
 </template>
 
 <script>
