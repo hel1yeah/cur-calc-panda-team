@@ -6,9 +6,7 @@
       <template v-else>
         <label class="exchange__lable"> Базова валюта</label>
         <select class="exchange__select" v-model="baseCurrencyApp">
-          <h1>{{ baseCurrencyApp }}</h1>
           <option
-            @click="test(currency)"
             class="exchange__option"
             v-for="({ countrie, currency }, index) in currencyList"
             :key="index"
@@ -664,7 +662,6 @@ export default {
     getExchangeRate() {
       if (this.exchangeRate && this.exchangeRate.length > 0 && this.trigger)
         return false;
-
       this.$store
         .dispatch('exchange/getExchangeRate', this.baseCurrencyStore)
         .then(() => {
@@ -673,12 +670,14 @@ export default {
 
       this.$store.commit('currencies/setBaseCurrency', this.baseCurrencyApp);
     },
+
     getCurrencyList() {
       if (this.currencyList && this.currencyList.length > 0) return false;
       this.$store.dispatch('currencies/getCurrencyList');
     },
-    test(t) {
-      console.log(t);
+
+    setBaseCurrency() {
+      this.baseCurrencyApp = this.baseCurrencyStore;
     },
   },
   computed: {
@@ -693,21 +692,16 @@ export default {
     }),
   },
   mounted() {
+    this.setBaseCurrency();
     this.getExchangeRate();
     this.getCurrencyList();
   },
   watch: {
-    baseCurrencyApp: function (val, oldVal) {
-      console.log('новое значение: %s, старое значение: %s', val, oldVal);
+    baseCurrencyApp: function (val) {
       this.trigger = false;
       this.baseCurrencyApp = val;
       this.getExchangeRate();
     },
-    // baseCurrencyApp(val) {
-    //   this.trigger = false;
-    //   this.baseCurrency = val;
-    //   this.getExchangeRate();
-    // },
   },
 };
 </script>
