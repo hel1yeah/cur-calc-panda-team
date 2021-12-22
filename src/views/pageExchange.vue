@@ -715,6 +715,7 @@ export default {
   margin: 0 0 0 30px;
 }
 .exchange__card--wrapper {
+  margin: 30px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -723,9 +724,9 @@ export default {
 .exchange__card {
   background: linear-gradient(90deg, #dae4f4 0%, #d3dcf1 100%);
   border-radius: 10px;
-  margin: 40px 0 0;
-  padding: 20px;
-  width: 365px;
+  margin: 20px 6px;
+  padding: 15px;
+  width: 355px;
   min-height: 300px;
   box-shadow: 0px 0px 10px var(--blue-clor);
   min-height: 240px;
@@ -750,6 +751,13 @@ export default {
   padding: 5px 0;
   & > span {
     text-align: right;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .exchange__card {
+    flex-grow: 1;
+    margin: 10px 20px;
   }
 }
 </style>

@@ -6,6 +6,7 @@
         <span>Міняю</span>
         <input
           class="calc__input"
+          :class="error"
           type="number"
           v-model.number.trim="changingSum"
         />
@@ -57,6 +58,7 @@ export default {
   components: {},
   data() {
     return {
+      error: false,
       changingSum: '',
       changingCurrency: '',
       receiveSum: '',
@@ -169,6 +171,10 @@ export default {
   .calc__inner {
     flex-direction: column;
     justify-content: space-between;
+    margin: 10% auto;
+  }
+  .calc__button--reverse {
+    margin: 30px;
   }
 }
 </style>

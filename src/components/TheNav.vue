@@ -51,4 +51,14 @@ export default {
     color: var(--pink-color);
   }
 }
+
+@media screen and (max-width: 500px) {
+  .nav {
+    padding: 10px 0;
+  }
+  ul.nav__list {
+    padding: 0;
+    justify-content: center;
+  }
+}
 </style>
