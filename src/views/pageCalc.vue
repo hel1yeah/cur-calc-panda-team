@@ -27,7 +27,8 @@
 
       <label class="calc__lable">
         <span>Отримую</span>
-        <input class="calc__input" type="text" v-model="receiveSum" />
+        <span v-if="isConvert">{{ isConvert.curency }}</span>
+        <!-- <input class="calc__input" type="text" v-model="receiveSum" /> -->
         <select class="calc__select" v-model="receiveCurrency">
           <option
             class="calc__select--option"
@@ -38,6 +39,9 @@
             {{ currency }} [ {{ countrie }} ]
           </option>
         </select>
+        <span v-if="isConvert" class="calc__lable--curency">
+          За курсом {{ isConvert.rate }}
+        </span>
       </label>
     </div>
     <button @click="onConvert" class="calc__button--calculate">
@@ -77,7 +81,7 @@ export default {
         amount: this.changingSum,
       };
 
-      this.$store.dispatch('convert/getIsConverStart', option);
+      this.$store.dispatch('convert/getIsConvert', option);
     },
   },
   computed: {
@@ -85,6 +89,7 @@ export default {
       loadingExchange: (state) => state.exchange.loading,
       currencyList: (state) => state.currencies.currencyList,
       baseCurrencyStore: (state) => state.currencies.baseCurrency,
+      isConvert: (state) => state.convert.isConvert,
     }),
   },
   mounted() {
@@ -112,11 +117,18 @@ export default {
   justify-content: space-around;
 }
 .calc__lable {
+  position: relative;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   justify-content: space-between;
   height: 90px;
+}
+.calc__lable--curency {
+  font-size: 16px;
+  position: absolute;
+  top: 100%;
+  right: 0;
 }
 .calc__input {
 }
@@ -150,6 +162,13 @@ export default {
   transition: 0.5s all;
   &:hover {
     box-shadow: 0px 4px 40px var(--purple-clor);
+  }
+}
+
+@media screen and( max-width:940px) {
+  .calc__inner {
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 </style>

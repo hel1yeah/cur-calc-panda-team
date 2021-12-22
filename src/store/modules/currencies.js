@@ -36,11 +36,11 @@ export default {
         commit('getCurrencyListStart');
         getCurrency()
           .then(({ data }) => {
-            // console.log(data.currencies);
             const newCurrencies = Object.keys(data.currencies).map((item) => ({
               countrie: item,
               currency: data.currencies[item],
             }));
+
             commit('getCurrencyListSuccess', newCurrencies);
           })
           .catch((err) => {

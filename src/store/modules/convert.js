@@ -1,53 +1,53 @@
 import { getConvert } from './../../axios/convert';
+import { setNewObj } from '../../helpers/setNewObj';
 
 export default {
   namespaced: true,
   state() {
     return {
-      isConver: null,
+      isConvertt: null,
       error: null,
       loading: false,
     };
   },
   mutations: {
-    isConverStart(state) {
-      state.isConver = null;
+    isConvertStart(state) {
+      state.isConvert = null;
       state.error = null;
       state.loading = true;
     },
-    isConverSuccess(state, payload) {
-      state.isConver = payload;
+    isConvertSuccess(state, payload) {
+      state.isConvert = payload;
       state.error = null;
       state.loading = true;
     },
-    isConverFailure(state, payload) {
-      state.isConver = null;
+    isConvertFailure(state, payload) {
+      state.isConvert = null;
       state.error = payload;
       state.loading = true;
     },
   },
   actions: {
-    async getIsConverStart({ commit }, option) {
-      commit('isConverStart');
+    async getIsConvert({ commit }, option) {
+      commit('isConvertStart');
       try {
         const { data } = await getConvert(option);
-        console.log(data.result);
-        commit('isConverSuccess', data.result);
+        console.log(setNewObj(data.result));
+        commit('isConvertSuccess', setNewObj(data.result));
       } catch (err) {
         console.log(err);
-        commit('isConverFailure', err);
+        commit('isConvertFailure', err);
       }
     },
-    // getIsConverStart({ commit }, option) {
+    // getisConvertStart({ commit }, option) {
     //   return new Promise(() => {
-    //     commit('isConverStart');
+    //     commit('isConvertStart');
     //     getConvert(option)
     //       .then(({ data }) => {
-    //         console.log(data);
-    //         commit('isConverSuccess', data);
+    //         commit('isConvertSuccess', setNewObj(data.result));
     //       })
     //       .catch((err) => {
-    //         commit('isConverFailure', err);
+    //         commit('isConvertFailure', err);
     //       });
     //   });
     // },
